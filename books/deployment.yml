@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: books-config
+data:
+  config.yml: |
+    server:
+      host: "0.0.0.0"
+      port: 8090
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: books-deployment
+  labels:
+    app: books
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: books
+  template:
+    metadata:
+      labels:
+        app: books
+    spec:
+      containers:
+      - name: books
+        image: books:1.0.0
+        args: ["config/config.yml"]
+        ports:
+        - containerPort: 8090
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8090
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8090
+          initialDelaySeconds: 3
+          periodSeconds: 3
+      volumes:
+        - name: config
+          configMap:
+            name: books-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: books-service
+spec:
+  selector:
+    app: books
+  ports:
+  - name: tcp
+    protocol: TCP
+    port: 8090
+    targetPort: 8090

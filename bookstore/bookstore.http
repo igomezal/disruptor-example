@@ -1,0 +1,26 @@
+POST http://localhost/bookstore/v1/purchase
+
+[
+    "Moby Dick; Or, The Whale",
+    "Romeo and Juliet",
+    "Frankenstein; Or, The Modern Prometheus"
+]
+
+###
+
+GET http://localhost:8091/purchased
+
+
+###
+
+POST http://localhost/bookstore/v1/purchase
+
+[
+    "Moby Dick; Or, The Whale",
+    "Romeo and Juliet",
+    "Frankenstein; Or, The Modern Prometheus"
+]
+
+###
+
+GET http://localhost/bookstore/v1/purchased

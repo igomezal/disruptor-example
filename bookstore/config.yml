@@ -1,0 +1,9 @@
+server:
+  host: "localhost"
+  port: 8091
+client:
+  books:
+    protocol: "http://"
+    host: "localhost"
+    port: ":8090"
+    endpoint: "/books"
