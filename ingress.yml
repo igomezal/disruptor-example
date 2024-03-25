@@ -9,14 +9,21 @@ spec:
   - http:
       paths:
       - pathType: Prefix
-        path: /books/v1(/|$)(.*)
+        path: /frontend(/|$)(.*)
+        backend:
+          service:
+            name: books-frontend-service
+            port:
+              number: 8090
+      - pathType: Prefix
+        path: /api/books(/|$)(.*)
         backend:
           service:
             name: books-service
             port:
               number: 8090
       - pathType: Prefix
-        path: /bookstore/v1(/|$)(.*)
+        path: /api/bookstore(/|$)(.*)
         backend:
           service:
             name: bookstore-service

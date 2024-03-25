@@ -2,10 +2,11 @@
 
 Basic example of chaos testing using [xk6-disruptor](https://grafana.com/docs/k6/latest/testing-guides/injecting-faults-with-xk6-disruptor/) extension.
 
-In this example you can find two dummy services:
+In this example you can find three dummy services:
 
-- Books service which expose an endpoint that list of available books to be purchased.
-- Bookstore service which expose two endpoints to purchase books using their name and to check which books where purchased.
+- Frontend books service which exposes a frontend application showing the list of books available and purchased.
+- Books service which exposes an endpoint that list of available books to be purchased.
+- Bookstore service which exposes two endpoints to purchase books using their name and to check which books where purchased.
 
 All the data is stored in memory **without using any database** to make it simple and focus on the disruptor.
 
@@ -49,7 +50,11 @@ kubectl wait --namespace ingress-nginx \
 kubectl apply -f ingress.yml
 ```
 
-5. Build the two images
+5. Build the three images
+
+```sh
+docker build -t books-frontend:1.0.0 books-frontend
+```
 
 ```sh
 docker build -t bookstore:1.0.0 bookstore
@@ -62,6 +67,10 @@ docker build -t books:1.0.0 books
 6. Deploy the images inside kind cluster
 
 ```sh
+kind load docker-image books-frontend:1.0.0
+```
+
+```sh
 kind load docker-image bookstore:1.0.0
 ```
 
@@ -69,7 +78,11 @@ kind load docker-image bookstore:1.0.0
 kind load docker-image books:1.0.0
 ```
 
-7. Deploy books and bookstore deployments into kind cluster
+7. Deploy books-frontend, books and bookstore deployments into kind cluster
+
+```sh
+kubectl apply -f books-frontend/deployment.yml
+```
 
 ```sh
 kubectl apply -f books/deployment.yml

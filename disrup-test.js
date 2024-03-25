@@ -2,7 +2,7 @@ import { ServiceDisruptor } from 'k6/x/disruptor';
 import http from 'k6/http';
 
 export function setup() {
-    http.post(`http://localhost/bookstore/v1/purchase`, JSON.stringify([
+    http.post(`http://localhost/api/bookstore/purchase`, JSON.stringify([
         'Moby Dick; Or, The Whale',
         'Romeo and Juliet',
         'Frankenstein; Or, The Modern Prometheus',
@@ -10,7 +10,7 @@ export function setup() {
 }
 
 export default function (data) {
-    http.get(`http://localhost/bookstore/v1/purchased`);
+    http.get(`http://localhost/api/bookstore/purchased`);
 }
 
 export function disrupt(data) {
@@ -25,7 +25,9 @@ export function disrupt(data) {
         averageDelay: '500ms',
         errorCode: 500,
         errorRate: 0.1,
+        exclude: '/health'
     };
+
     serviceDisruptor.injectHTTPFaults(fault, '1m');
 }
 

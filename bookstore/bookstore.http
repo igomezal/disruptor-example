@@ -1,4 +1,4 @@
-POST http://localhost/bookstore/v1/purchase
+POST http://localhost/api/bookstore/purchase
 
 [
     "Moby Dick; Or, The Whale",
@@ -13,7 +13,7 @@ GET http://localhost:8091/purchased
 
 ###
 
-POST http://localhost/bookstore/v1/purchase
+POST http://localhost/api/bookstore/purchase
 
 [
     "Moby Dick; Or, The Whale",
@@ -23,4 +23,4 @@ POST http://localhost/bookstore/v1/purchase
 
 ###
 
-GET http://localhost/bookstore/v1/purchased
+GET http://localhost/api/bookstore/purchased

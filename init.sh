@@ -18,13 +18,19 @@ done
 
 kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
 
+docker build -t books-frontend:1.0.0 books-frontend
+
 docker build -t bookstore:1.0.0 bookstore
 
 docker build -t books:1.0.0 books
 
+kind load docker-image books-frontend:1.0.0
+
 kind load docker-image bookstore:1.0.0
 
 kind load docker-image books:1.0.0
+
+kubectl apply -f books-frontend/deployment.yml
 
 kubectl apply -f books/deployment.yml
 
