@@ -1,4 +1,4 @@
-FROM golang:1.22 AS build-stage
+FROM golang:1.22-alpine AS build-stage
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY *.go ./
 RUN CGO_ENABLED=0 GOOS=linux go build -o /bookstore
 
 # Deploy the application binary into a lean image
-FROM gcr.io/distroless/base-debian11 AS build-release-stage
+FROM gcr.io/distroless/static-debian12 AS build-release-stage
 
 WORKDIR /
 

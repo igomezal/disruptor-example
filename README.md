@@ -139,3 +139,7 @@ docker image rm books:1.0.0
 ```sh
 docker image rm bookstore:1.0.0
 ```
+
+```sh
+docker image rm books-frontend:1.0.0
+```
